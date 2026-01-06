@@ -1,0 +1,83 @@
+/* Variáveis CSS para tema */
+:root {
+    --menu-vertical: rgba(182, 182, 182, 0.164);
+    --menu-vertical-a-hover: rgba(148, 148, 148, 0.164);
+    --menu-vertical-a: rgb(0, 0, 0);
+    --submenu: rgba(0, 0, 0, 0.164) ;
+}
+
+[data-theme="dark"] {
+    --menu-vertical: rgba(255, 255, 255, 0.164);
+    --menu-vertical-a-hover: rgba(255, 255, 255, 0.322);
+    --submenu: rgba(255, 255, 255, 0.164) ;
+    --menu-vertical-a: rgb(255, 255, 255);
+}
+
+/* Estilização básica do menu lateral */
+.menu-vertical {
+    position: fixed;
+    top: 15%;
+    left: 0px;
+    width: 19%;
+    height: 80vh; /* ou um valor fixo como 400px */
+    background: var(--menu-vertical);
+    backdrop-filter: blur(2px);
+    overflow-y: auto; /* ← permite rolagem vertical */
+}
+
+.menu-vertical:active {
+    cursor: grabbing;
+}
+
+.menu-vertical {
+    overflow-x: scroll;
+    scrollbar-width: none;
+}
+
+.menu-vertical::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Edge */
+}
+
+.menu-vertical ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.menu-vertical a {
+  color: var(--menu-vertical-a);
+  padding: 12px 20px;
+  display: block;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+
+.menu-vertical a:hover {
+      background: var(--menu-vertical-a-hover);
+    backdrop-filter: blur(2px);
+}
+
+.submenu {
+  display: none;
+      background: var(--submenu);
+    backdrop-filter: blur(2px);
+}
+
+.submenu.ativo {
+  display: block;
+}
+
+.dropdown > a {
+  position: relative;
+}
+
+.dropdown > a::after {
+  content: '▼';
+  position: absolute;
+  right: 20px;
+  transition: transform 0.3s;
+}
+
+.dropdown > a.ativo::after {
+  transform: rotate(180deg);
+}

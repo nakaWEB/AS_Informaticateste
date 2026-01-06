@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AS Informatica</title>
+    <link rel="stylesheet" href="/frontend/css/style.css">
+    <link rel="stylesheet" href="/frontend/css/menu-lateral.css">
+    <link rel="stylesheet" href="/frontend/css/barra-superior.css">
+    <link rel="stylesheet" href="/frontend/css/rodape.css">
+    <link rel="stylesheet" href="/frontend/js/products.js">
+
+
+    <link rel="stylesheet" href="css/product-cards.css">
+<link rel="stylesheet" href="css/product-modal.css">
+<link rel="stylesheet" href="css/search-realtime-adaptado.css">
+<script src="js/search-realtime-adaptado.js"></script>
+<script src="js/products-data.js"></script>
+<script src="js/search-engine.js"></script>
+<script src="js/router.js"></script>
+<script src="js/render-products.js"></script>
+
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Sidebar -->
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h1>AS</h1>
+            <h2> Informatica</h2>
+        </div>
+
+        <ul class="nav-links">
+            <li><a href="index.html" class="active"><i class="fas fa-home"></i><span>Home</span></a></li>
+            <li><a href="contato.html"><i class="fas fa-envelope"></i><span>Contato</span></a></li>
+            <li id="adminLink" style="display: none;"><a href="admin.html"><i
+                        class="fas fa-cog"></i><span>Admin</span></a></li>  
+        </ul>
+
+        <h1 class="rainbow-text">PORTIFOLIO</h1>
+
+        <button class="theme-toggle" id="themeToggle">
+            <i class="fas fa-moon"></i>
+        </button>
+
+        <button onclick="window.location.href='login.html'" class="btn-login">
+            <i class="fas fa-sign-in-alt"></i> Login
+        </button>
+    </nav>
+
+<nav class="nav-categoria">
+<header class="header">
+    <div class="search-bar" style="position: relative;">
+        <input type="text" id="searchInput" 
+               placeholder="Pesquisar produtos ou tags..." 
+               autocomplete="off">
+        <button onclick="performSearch()">
+            <i class="fas fa-search"></i>
+        </button>
+        
+        <!-- Dropdown de sugestões -->
+        <div id="searchSuggestions" class="search-suggestions" style="display: none;">
+            <!-- Sugestões aparecerão aqui -->
+        </div>
+    </div>
+</header>
+</nav>
+
+<!-- rederizador de produtos -->
+<div class="products-container">
+  <!-- Barra de pesquisa fixa dentro do container -->
+
+  
+  <!-- Container de tags fixo -->
+  <div class="tags-fixed">
+    <span></span>
+    <div id="popularTags"></div>
+  </div>
+  
+  <!-- Grid de produtos (scrollável) -->
+  <div id="productsGrid" class="products-grid">
+    <!-- Produtos virão aqui -->
+  </div>
+</div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <img class="PdF" src="/frontend/assets/images/plano de fundo folha.png" alt="">
+            <nav class="menu-vertical">
+                <ul id="menu"></ul>
+            </nav>
+            <div class="conteiner-produtos"></div>
+    </main>
+
+    <script src="/frontend/js/auth.js"></script>
+    <script src="/frontend/js/products.js"></script>
+    <script src="/frontend/js/theme.js"></script>
+    <!--script barra-->
+    <script>
+        // JavaScript
+        const dados = [
+            {
+                titulo: 'Impressão',
+                itens: ['Folha A1', 'Folha A2', 'Folha A3', 'Folha A4', 'Folha A5', 'Folha A6']
+            },
+            {
+                titulo: 'Cabos',
+                itens: ['Cabo VGA', 'Cabo HDMI', 'Adaptador HDMI', 'Adaptador VGA', 'Cabo de Rede']
+            },
+            {
+                titulo: 'Adesivos',
+                itens: ['Adesivo de Recorte', 'Adesivo Impreço', 'Adesivo Translúcido']
+            },
+            {
+                titulo: 'Folhas',
+                itens: ['Folha A1', 'Folha A2', 'Folha A3', 'Folha A4', 'Folha A5', 'Folha A6', 'Cartolina']
+            },
+            {
+                titulo: 'Canetas e Lapis',
+                itens: ['Caneta esferografica', 'Lapis faber Castelo',]
+            },
+            {
+                titulo: 'Tinta Impreçora',
+                itens: ['EPSON M105', ]
+            },
+            {
+                titulo: 'Tinta Impreçora',
+                itens: ['EPSON M105', ]
+            },
+            {
+                titulo: 'Tinta Impreçora',
+                itens: ['EPSON M105', ]
+            },
+            {
+                titulo: 'Tinta Impreçora',
+                itens: ['EPSON M105', ]
+            },
+            {
+                titulo: 'Tinta Impreçora',
+                itens: ['EPSON M105', ]
+            },
+            {
+                titulo: 'Tinta Impreçora',
+                itens: ['EPSON M105', ]
+            },
+            {
+                titulo: 'Tinta Impreçora',
+                itens: ['EPSON M105', ]
+            },
+            {
+                titulo: 'Tinta Impreçora',
+                itens: ['EPSON M105', ]
+            },
+            {
+                titulo: 'Tinta Impreçora',
+                itens: ['EPSON M105', ]
+            },
+            {
+                titulo: 'Tinta Impreçora',
+                itens: ['EPSON M105', ]
+            },
+            {
+                titulo: 'Tinta Impreçora',
+                itens: ['EPSON M105', ]
+            },
+            {
+                titulo: 'Tinta Impreçora',
+                itens: ['EPSON M105', ]
+            },
+            {
+                titulo: 'Tinta Impreçora',
+                itens: ['EPSON M105', ]
+            },
+            {
+                titulo: 'Tinta Impreçora',
+                itens: ['EPSON M105', ]
+            }
+        ];
+
+        const menu = document.getElementById('menu');
+
+        dados.forEach(secao => {
+            const li = document.createElement('li');
+            li.className = 'dropdown';
+
+            li.innerHTML = `
+    <a href="#">${secao.titulo}</a>
+    <ul class="submenu">
+      ${secao.itens.map(item => `<li><a href="#">${item}</a></li>`).join('')}
+    </ul>
+  `;
+            menu.appendChild(li);
+        });
+
+        // Comportamento dos dropdowns
+        menu.addEventListener('click', e => {
+            const link = e.target.closest('a');
+            if (!link) return;
+
+            const dropdown = link.parentElement;
+            const sub = dropdown.querySelector('.submenu');
+            if (!sub) return;
+
+            e.preventDefault();
+
+            // Toggle do submenu
+            const estaAberto = sub.classList.contains('ativo');
+
+            // Fecha todos os submenus
+            document.querySelectorAll('.submenu.ativo').forEach(s => s.classList.remove('ativo'));
+            document.querySelectorAll('.dropdown > a.ativo').forEach(a => a.classList.remove('ativo'));
+
+            // Abre o clicado se estava fechado
+            if (!estaAberto) {
+                sub.classList.add('ativo');
+                link.classList.add('ativo');
+            }
+        });
+
+        // Fecha ao clicar fora
+        addEventListener('click', e => {
+            if (!e.target.closest('.menu-vertical')) {
+                document.querySelectorAll('.submenu.ativo').forEach(s => s.classList.remove('ativo'));
+                document.querySelectorAll('.dropdown > a.ativo').forEach(a => a.classList.remove('ativo'));
+            }
+        });
+    </script>
+
+<script>
+const nav = document.querySelector('.nav-categoria');
+const link = document.querySelector('.nav-categoria-link');
+
+// Converte scroll vertical em horizontal
+nav.addEventListener('wheel', (e) => {
+    e.preventDefault(); // impede scroll vertical
+    nav.scrollLeft += e.deltaY; // move horizontalmente
+});
+</script>
+
+<script>
+    // Carrega produtos aleatórios na index
+carregarProdutosAleatorios('conteiner-produtos', 6);
+</script>
+
+<script>
+    // tags-nav.js
+function renderTagsNav() {
+    const container = document.getElementById('tagsContainer');
+    const tags = searchEngine.getPopularTags(12); // Pega as 12 tags mais populares
+    
+    container.innerHTML = tags.map(tag => 
+        `<li><a href="#" onclick="searchByTag('${tag}'); return false;">${tag}</a></li>`
+    ).join('');
+}
+
+// Função para buscar por tag (já existe no código anterior)
+function searchByTag(tag) {
+    document.getElementById('searchInput').value = tag;
+    const results = searchEngine.searchByTag(tag);
+    renderProducts(results);
+    
+    // Scroll suave para os resultados
+    document.getElementById('productsGrid').scrollIntoView({ 
+        behavior: 'smooth' 
+    });
+}
+
+// Inicializar quando carregar a página
+document.addEventListener('DOMContentLoaded', () => {
+    renderTagsNav();
+});
+</script>
+
+<footer class="rodape">
+    <div class="rodape-bar">
+        <p>&copy; 2025 AS Informatica. Todos os direitos reservados.</p>
+    </div>
+</footer>
+</body>
+
+</html>

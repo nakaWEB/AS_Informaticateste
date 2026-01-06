@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Sistema de Divulgação</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Sidebar -->
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h2><i class="fas fa-store"></i> Divulgação</h2>
+            <button class="toggle-btn" id="toggleBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        
+        <ul class="nav-links">
+            <li><a href="index.html"><i class="fas fa-home"></i><span>Home</span></a></li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle">
+                    <i class="fas fa-th-large"></i><span>Setores</span><i class="fas fa-chevron-down arrow"></i>
+                </a>
+                <ul class="sub-menu">
+                    <li><a href="setores/LOJA.html"><i class="fas fa-laptop"></i>Tecnologia</a></li>
+                    <li><a href="setores/MDF.html"><i class="fas fa-tshirt"></i>Moda</a></li>
+                    <li><a href="setores/PLACAS.html"><i class="fas fa-home"></i>Casa & Decoração</a></li>
+                    <li><a href="setores/TOLDOS.html"><i class="fas fa-running"></i>Esportes</a></li>
+                </ul>
+            </li>
+            <li><a href="contato.html"><i class="fas fa-envelope"></i><span>Contato</span></a></li>
+            <li><a href="admin.html" class="active"><i class="fas fa-cog"></i><span>Admin</span></a></li>
+        </ul>
+
+        <div class="sidebar-footer">
+            <div class="user-info" id="userInfo">
+                <button onclick="window.location.href='login.html'" class="btn-login">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </button>
+            </div>
+            <button class="theme-toggle" id="themeToggle">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <header class="header">
+            <h1><i class="fas fa-cog"></i> Painel Administrativo</h1>
+        </header>
+
+        <div class="container">
+            <div class="admin-panel">
+                <div class="admin-tabs">
+                    <button class="tab-button active" onclick="showTab('users')">
+                        <i class="fas fa-users"></i> Usuários
+                    </button>
+                    <button class="tab-button" onclick="showTab('products')">
+                        <i class="fas fa-box"></i> Produtos
+                    </button>
+                    <button class="tab-button" onclick="showTab('messages')">
+                        <i class="fas fa-envelope"></i> Mensagens
+                    </button>
+                    <button class="tab-button" onclick="showTab('settings')">
+                        <i class="fas fa-tools"></i> Configurações
+                    </button>
+                </div>
+
+                <!-- Aba de Usuários -->
+                <div id="usersTab" class="tab-content active">
+                    <h2>Gerenciamento de Usuários</h2>
+                    <div class="table-container">
+                        <table class="admin-table" id="usersTable">
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>Email</th>
+                                    <th>Função</th>
+                                    <th>Data de Cadastro</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="usersTableBody">
+                                <!-- Usuários serão carregados aqui -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Aba de Produtos -->
+                <div id="productsTab" class="tab-content">
+                    <h2>Gerenciamento de Produtos</h2>
+                    <div class="table-container">
+                        <table class="admin-table" id="productsTable">
+                            <thead>
+                                <tr>
+                                    <th>Imagem</th>
+                                    <th>Nome</th>
+                                    <th>Categoria</th>
+                                    <th>Preço</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="productsTableBody">
+                                <!-- Produtos serão carregados aqui -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Aba de Mensagens -->
+                <div id="messagesTab" class="tab-content">
+                    <h2>Mensagens de Contato</h2>
+                    <div id="messagesContainer">
+                        <!-- Mensagens serão carregadas aqui -->
+                    </div>
+                </div>
+
+                <!-- Aba de Configurações -->
+                <div id="settingsTab" class="tab-content">
+                    <h2>Configurações do Sistema</h2>
+                    <div class="settings-form">
+                        <div class="form-group">
+                            <label>Nome do Site</label>
+                            <input type="text" id="siteName" value="Sistema de Divulgação">
+                        </div>
+                        <div class="form-group">
+                            <label>Email de Contato</label>
+                            <input type="email" id="contactEmail" value="contato@site.com">
+                        </div>
+                        <button class="btn-submit" onclick="saveSettings()">
+                            <i class="fas fa-save"></i> Salvar Configurações
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/auth.js"></script>
+    <script src="js/admin.js"></script>
+    <script src="js/theme.js"></script>
+    <script>
+        // Verificar se é admin
+        document.addEventListener('DOMContentLoaded', () => {
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            if (user.role !== 'admin') {
+                alert('Acesso negado! Você precisa ser administrador.');
+                window.location.href = 'index.html';
+                return;
+            }
+            
+            checkUserStatus();
+            loadAdminData();
+        });
+
+        function showTab(tabName) {
+            // Esconder todas as abas
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Remover active de todos os botões
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Mostrar aba selecionada
+            document.getElementById(tabName + 'Tab').classList.add('active');
+            
+            // Ativar botão correspondente
+            event.target.classList.add('active');
+        }
+
+        async function loadAdminData() {
+            try {
+                // Carregar usuários
+                const users = await getUsers();
+                renderUsersTable(users);
+                
+                // Carregar produtos
+                const products = await getProducts();
+                renderProductsTable(products);
+                
+                // Carregar mensagens
+                const messages = await getMessages();
+                renderMessages(messages);
+                
+            } catch (error) {
+                console.error('Erro ao carregar dados admin:', error);
+                alert('Erro ao carregar dados administrativos');
+            }
+        }
+
+        async function getUsers() {
+            const response = await fetch('http://localhost:3000/api/users', {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            });
+            
+            if (!response.ok) throw new Error('Erro ao buscar usuários');
+            return await response.json();
+        }
+
+        async function getMessages() {
+            const response = await fetch('http://localhost:3000/api/contact', {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            });
+            
+            if (!response.ok) throw new Error('Erro ao buscar mensagens');
+            return await response.json();
+        }
+
+        function renderUsersTable(users) {
+            const tbody = document.getElementById('usersTableBody');
+            tbody.innerHTML = users.map(user => `
+                <tr>
+                    <td>${user.name}</td>
+                    <td>${user.email}</td>
+                    <td>
+                        <span class="role-badge ${user.role}">
+                            ${user.role === 'admin' ? 'Administrador' : 'Usuário'}
+                        </span>
+                    </td>
+                    <td>${new Date(user.createdAt).toLocaleDateString()}</td>
+                    <td>
+                        <button class="btn-action btn-edit" onclick="toggleUserRole('${user._id}', '${user.role}')">
+                            <i class="fas fa-user-edit"></i> Alterar Função
+                        </button>
+                        <button class="btn-action btn-delete" onclick="deleteUser('${user._id}')">
+                            <i class="fas fa-user-minus"></i> Excluir
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function renderProductsTable(products) {
+            const tbody = document.getElementById('productsTableBody');
+            tbody.innerHTML = products.map(product => `
+                <tr>
+                    <td><img src="${product.image}" alt="${product.name}" class="product-thumb"></td>
+                    <td>${product.name}</td>
+                    <td>${product.category}</td>
+                    <td>R$ ${product.price.toFixed(2)}</td>
+                    <td>
+                        <button class="btn-action btn-edit" onclick="window.location.href='setores/${product.category}.html'">
+                            <i class="fas fa-edit"></i> Editar
+                        </button>
+                        <button class="btn-action btn-delete" onclick="deleteProduct('${product._id}')">
+                            <i class="fas fa-trash"></i> Excluir
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function renderMessages(messages) {
+            const container = document.getElementById('messagesContainer');
+            container.innerHTML = messages.map(message => `
+                <div class="message-card">
+                    <div class="message-header">
+                        <h4>${message.name}</h4>
+                        <span class="message-date">${new Date(message.createdAt).toLocaleDateString()}</span>
+                    </div>
+                    <p><strong>Email:</strong> ${message.email}</p>
+                    <p><strong>Assunto:</strong> ${message.subject}</p>
+                    <p>${message.message}</p>
+                </div>
+            `).join('');
+        }
+
+        async function toggleUserRole(userId, currentRole) {
+            const newRole = currentRole === 'admin' ? 'user' : 'admin';
+            
+            try {
+                const response = await fetch(`http://localhost:3000/api/users/${userId}/role`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    },
+                    body: JSON.stringify({ role: newRole })
+                });
+
+                if (response.ok) {
+                    alert(`Função alterada para ${newRole === 'admin' ? 'Administrador' : 'Usuário'}`);
+                    location.reload();
+                } else {
+                    throw new Error('Erro ao alterar função');
+                }
+            } catch (error) {
+                alert('Erro: ' + error.message);
+            }
+        }
+
+        async function deleteUser(userId) {
+            if (confirm('Tem certeza que deseja excluir este usuário?')) {
+                try {
+                    const response = await fetch(`http://localhost:3000/api/users/${userId}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'Authorization': `Bearer ${localStorage.getItem('token')}`
+                        }
+                    });
+
+                    if (response.ok) {
+                        alert('Usuário excluído com sucesso!');
+                        location.reload();
+                    } else {
+                        throw new Error('Erro ao excluir usuário');
+                    }
+                } catch (error) {
+                    alert('Erro: ' + error.message);
+                }
+            }
+        }
+
+        function saveSettings() {
+            // Implementar salvamento de configurações
+            alert('Configurações salvas com sucesso!');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+/* search-realtime-adaptado.css - se encaixa no seu tema existente */
+.search-suggestions {
+    position: absolute;
+    top: calc(100% + 5px);
+    left: 0;
+    right: 0;
+    background: var(--botoes-barra-fundo);
+    border: 1px solid var(--botoes-barra-fundo-hover);
+    border-radius: 0 0 15px 15px;
+    max-height: 300px;
+    overflow-y: auto;
+    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.suggestion-item {
+    padding: 8px 15px;
+    cursor: pointer;
+    border-bottom: 1px solid var(--botoes-barra-fundo-hover);
+    transition: background 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.suggestion-item:hover,
+.suggestion-item.active {
+    background: var(--botoes-barra-fundo-hover);
+}
+
+.suggestion-product img {
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.suggestion-product-info {
+    flex: 1;
+}
+
+.suggestion-product-name {
+    color: var(--botoes-barra);
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.suggestion-product-price {
+    color: var(--primary-color);
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+.suggestion-tag {
+    color: var(--botoes-barra);
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.suggestion-tag i {
+    font-size: 0.7rem;
+}
+
+.suggestion-highlight {
+    background: rgba(255, 255, 0, 0.3);
+    font-weight: bold;
+}
+
+.suggestion-section {
+    padding: 5px 15px;
+    background: rgba(0,0,0,0.05);
+    color: var(--botoes-barra);
+    font-size: 0.75rem;
+    font-weight: 600;
+    border-bottom: 1px solid var(--botoes-barra-fundo-hover);
+}
+
+/* Adaptação ao seu tema dark */
+[data-theme="dark"] .search-suggestions {
+    background: var(--card-bg);
+    border-color: var(--border-color);
+}
+
+[data-theme="dark"] .suggestion-item:hover,
+[data-theme="dark"] .suggestion-item.active {
+    background: rgba(255,255,255,0.1);
+}

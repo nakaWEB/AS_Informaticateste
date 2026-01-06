@@ -1,0 +1,53 @@
+site-divulgacao/
+├── backend/
+│   ├── config/
+│   │   ├──db.js
+│   │
+│   ├── middleware/
+│   │   ├── auth.js
+│   │
+│   ├── models/
+│   │   ├── Contact.js
+│   │   ├── product.js
+│   │   ├── user.js
+│   │
+│   ├── routes/
+│   │   ├── contact.js
+│   │   ├── product.js
+│   │   ├── user.js
+│   │   ├── auth.js 
+│   └── server.js
+│
+├── frontend/
+│   ├── assets/
+│   │   ├──images/
+│   │   │  
+│   │   ├──video/
+│   │
+│   ├── css/
+│   │   ├── .css
+│   │   ├── barra-superior.css
+│   │   ├── menu-lateral.css
+│   │   ├── style.css
+│   │   ├── rodape.css
+│   │
+│   ├── js/
+│   │   ├── admin.js
+│   │   ├── auth.js
+│   │   ├── main.js
+│   │   ├── products.js
+│   │   ├── theme.js
+│   │
+│   ├── setores/
+│   │   ├── LAJA.html
+│   │   ├── MDF.html
+│   │   ├── PLACAS.html
+│   │   ├── TOLDOS.html 
+│   │
+│   ├── admin.html
+│   ├── contato.html
+│   ├── index.html
+│   ├── login.html
+│   └── register.html
+│
+└── package.json

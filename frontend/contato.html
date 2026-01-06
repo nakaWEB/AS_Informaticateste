@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contato - Sistema de Divulgação</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Sidebar (mesma da index.html) -->
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h2><i class="fas fa-store"></i> Divulgação</h2>
+            <button class="toggle-btn" id="toggleBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        
+        <ul class="nav-links">
+            <li><a href="index.html"><i class="fas fa-home"></i><span>Home</span></a></li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle">
+                    <i class="fas fa-th-large"></i><span>Setores</span><i class="fas fa-chevron-down arrow"></i>
+                </a>
+                <ul class="sub-menu">
+                    <li><a href="setores/LOJA.html"><i class="fas fa-laptop"></i>Tecnologia</a></li>
+                    <li><a href="setores/MDF.html"><i class="fas fa-tshirt"></i>Moda</a></li>
+                    <li><a href="setores/PLACAS.html"><i class="fas fa-home"></i>Casa & Decoração</a></li>
+                    <li><a href="setores/TOLDOS.html"><i class="fas fa-running"></i>Esportes</a></li>
+                </ul>
+            </li>
+            <li><a href="contato.html" class="active"><i class="fas fa-envelope"></i><span>Contato</span></a></li>
+            <li id="adminLink" style="display: none;"><a href="admin.html"><i class="fas fa-cog"></i><span>Admin</span></a></li>
+        </ul>
+
+        <div class="sidebar-footer">
+            <div class="user-info" id="userInfo">
+                <button onclick="window.location.href='login.html'" class="btn-login">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </button>
+            </div>
+            <button class="theme-toggle" id="themeToggle">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <header class="header">
+            <h1><i class="fas fa-envelope"></i> Entre em Contato</h1>
+        </header>
+
+        <div class="container">
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h2>Informações de Contato</h2>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <h3>Endereço</h3>
+                            <p>Rua Exemplo, 123 - Centro<br>Cidade, Estado 12345-678</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <h3>Telefone</h3>
+                            <p>(11) 1234-5678<br>(11) 98765-4321</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h3>Email</h3>
+                            <p>contato@sistema-divulgacao.com<br>suporte@sistema-divulgacao.com</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <h3>Horário de Atendimento</h3>
+                            <p>Segunda a Sexta<br>9:00 às 18:00</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contact-form-container">
+                    <h2>Envie sua Mensagem</h2>
+                    <form id="contactForm" class="contact-form">
+                        <div class="form-group">
+                            <label for="contactName">Seu Nome</label>
+                            <input type="text" id="contactName" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="contactEmail">Seu Email</label>
+                            <input type="email" id="contactEmail" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="contactSubject">Assunto</label>
+                            <input type="text" id="contactSubject" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="contactMessage">Mensagem</label>
+                            <textarea id="contactMessage" rows="6" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn-submit">
+                            <i class="fas fa-paper-plane"></i> Enviar Mensagem
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/auth.js"></script>
+    <script src="js/theme.js"></script>
+    <script>
+        // Configurar formulário de contato
+        document.getElementById('contactForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = {
+                name: document.getElementById('contactName').value,
+                email: document.getElementById('contactEmail').value,
+                subject: document.getElementById('contactSubject').value,
+                message: document.getElementById('contactMessage').value
+            };
+            
+            try {
+                const response = await fetch('http://localhost:3000/api/contact', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+                
+                if (response.ok) {
+                    alert('Mensagem enviada com sucesso! Entraremos em contato em breve.');
+                    document.getElementById('contactForm').reset();
+                } else {
+                    throw new Error('Erro ao enviar mensagem');
+                }
+            } catch (error) {
+                alert('Erro ao enviar mensagem: ' + error.message);
+            }
+        });
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            checkUserStatus();
+        });
+    </script>
+</body>
+</html>
